@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { ItemsModule } from './items/items.module';
 import { ZombiesModule } from './zombies/zombies.module';
 
 
 @Module({
   imports: [
     ZombiesModule,
+    ItemsModule,
     ConfigModule.forRoot({
       envFilePath: `.env`
     }),
@@ -19,10 +19,9 @@ import { ZombiesModule } from './zombies/zombies.module';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: ['**/*.entity.js']
+      entities: ['**/*.entity.js'],
+      synchronize: true
     }),
-  ],
-  controllers: [AppController],
-  providers: [AppService],
+  ]
 })
 export class AppModule {}

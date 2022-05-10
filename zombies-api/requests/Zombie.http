@@ -1,0 +1,67 @@
+POST http://localhost:3000/zombies/ HTTP/1.1
+content-type: application/json
+
+{
+    "zombieName": "Zombie1",
+    "creationDate": "Wed, 21 Oct 2015 18:27:50 GMT"
+}
+
+###
+
+POST http://localhost:3000/zombies/ HTTP/1.1
+content-type: application/json
+
+{
+    "zombieName": "Zombie2"
+}
+
+###
+
+POST http://localhost:3000/items/ HTTP/1.1
+content-type: application/json
+
+{
+    "itemName": "Test",
+    "price": 10,
+    "zombieId": 2
+}
+
+
+###
+
+POST http://localhost:3000/zombies/addItem HTTP/1.1
+content-type: application/json
+
+{
+    "zombieId": 2,
+    "itemId": 2
+}
+
+###
+
+PATCH http://localhost:3000/zombies/7 HTTP/1.1
+content-type: application/json
+
+{
+    "zombieName": "Zombie2"
+}
+
+###
+
+DELETE http://localhost:3000/zombies/4 HTTP/1.1
+
+###
+
+GET http://localhost:3000/zombies/2 HTTP/1.1
+
+###
+
+GET http://localhost:3000/zombies/ HTTP/1.1
+
+###
+
+GET http://localhost:3000/zombies/getItems/2/ HTTP/1.1
+
+###
+
+GET http://localhost:3000/zombies/getItemsTotalValue/2/ HTTP/1.1

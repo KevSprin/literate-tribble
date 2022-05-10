@@ -1,0 +1,13 @@
+CREATE TABLE IF NOT EXISTS zombie(
+  id SERIAL NOT NULL PRIMARY KEY,
+  zombie_name TEXT NOT NULL,
+  creation_date TIMESTAMPTZ NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS item(
+  id SERIAL NOT NULL PRIMARY KEY,
+  item_name TEXT NOT NULL,
+  price INT NOT NULL,
+  zombie_id INT NOT NULL,
+  CONSTRAINT fk_zombie FOREIGN KEY(zombie_id) REFERENCES zombie(id)
+);
