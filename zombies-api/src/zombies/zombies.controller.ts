@@ -53,25 +53,25 @@ export class ZombiesController {
   }
 
   @Post()
-  addZombie(@Body() body: CreateZombieDto) {
-    return this.zombiesService.add(body.zombieName, body.creationDate);
+  async addZombie(@Body() body: CreateZombieDto) {
+    return await this.zombiesService.add(body);
   }
 
   @Post('/addItem')
-  addItemToZombie(@Body() body: AddItemToZombieDto) {
-    return this.zombiesService.addItemToZombie(body.zombieId, body.itemId);
+  async addItemToZombie(@Body() body: AddItemToZombieDto) {
+    return await this.zombiesService.addItemToZombie(body);
   }
 
   @Patch('/:id')
-  editZombie(@Body() body: EditZombieDto, @Param('id') id: string) {
-    return this.zombiesService.edit(+id, body.zombieName);
+  async editZombie(@Body() body: EditZombieDto, @Param('id') id: string) {
+    return await this.zombiesService.edit(+id, body);
   }
 
   @Delete('/:id')
-  deleteZombie(@Param('id') id: string){
+  async deleteZombie(@Param('id') id: string){
     let result;
     try {
-      result = this.zombiesService.remove(+id);
+      result = await this.zombiesService.remove(+id);
     } catch(err) {
       throw Error(err);
     }

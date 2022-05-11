@@ -22,8 +22,8 @@ content-type: application/json
 
 {
     "itemName": "Test",
-    "price": 10,
-    "zombieId": 2
+    "price": 10
+    
 }
 
 
@@ -64,4 +64,8 @@ GET http://localhost:3000/zombies/getItems/2/ HTTP/1.1
 
 ###
 
-GET http://localhost:3000/zombies/getItemsTotalValue/2/ HTTP/1.1
+GET http://localhost:3000/zombies/getItemsTotalValue/3/ HTTP/1.1
+
+###
+
+GET http://localhost:3000/items/ HTTP/1.1

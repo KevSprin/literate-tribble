@@ -7,12 +7,12 @@ export class ItemsController {
   constructor(private itemsService: ItemsService) {}
 
   @Get()
-  async getItems() {
-
+  getItems() {
+    return this.itemsService.getItems();
   }
 
   @Post()
   addItem(@Body() body: CreateItemDto) {
-    return this.itemsService.addItem(body.itemName, body.price, body.zombieId);
+    return this.itemsService.addItem(body);
   }
 }

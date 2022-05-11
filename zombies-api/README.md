@@ -1,73 +1,25 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+This project was created for a job interview.
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+The goal was to prepare an API, that'll provide certain functionalities. 
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+The user stories are the following:
+1. >I want to display details about selected zombie (name and creation date);
+2. >I want to display items that this zombie has;
+3. >I want to see total value of zombie’s items in 3 currencies, PLN/EU/USD;
+4. >I want to add and remove items from the zombie;
+5. >I want to see a list of zombies (create/update/remove them also);
 
-## Description
+During the 48 hour time window out of all user stories I managed to implement 1., 2. and 5. The user stories 3. and 4. were only partially implemented. I also managed to dockerzie this project.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+For the 3rd user story I'm missing the implementation which would 
+calculate the total value of the items in Euro and Dollars. Currently all values showed inside the output are the total value in PLN. If I had more time to develop this functionality, I would approach it by using the HttpService class to fetch data from the NBP API to 
+get the value of the Dollar and the Euro.
 
-## Installation
+As far as the 4th user story is concerned I've only managed to create an adding function which is not working the way I wanted. Currently it always sets a default zombieId inside the new item unless I choose a specific zombieId. My goal was to set it to a value like null, which is impossible in this current state, because the DB creation scripts set the `zombie_id` as `NOT NULL`.
 
-```bash
-$ npm install
-```
+In this current state I managed to create only tests for the controller. Honestly I'm not very happy how they are looking right now and how they test. It was my first time I worked with `Jest` and my experience with it was very good, however I should have probably stayed with Mocha, because it's more familiar to me.
+Obviously I'm missing tests for the `ZombiesService`, `ItemsService` and `ItemsController`. My approach while testing controllers would be testing the endpoints for different kinds of request responds. An example is provided in the tests for the `ZombieController`. Additionally I would also provide tests that would result in codes like `400`, `403` and `404`. In the controller tests I would stub the functions and test only the behaviour of the endpoint, not the business logic. The business logic would be tested in service tests.
 
-## Running the app
+After implementing all functionalities and tests I would focus on integrating Swagger into the project to provide a better documentation for the user.
 
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+Summarized, this was my first project I've ever done with `Nest.js`. I really liked it because of its file structure (separation into module, service, controller). The readability of the code is much better and wrtiting code in `Nest.js` is very pleasant. I'm still trying to get a better grip on `Typescript`, since there are some spots in the code where I practice using return values in the function declaration and in some other cases I'm not using it at all. Nevertheless I really enjoyed working on it and honestly would be very excited working in `Nest.js`.

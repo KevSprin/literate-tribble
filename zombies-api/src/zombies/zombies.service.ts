@@ -2,6 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Item } from 'src/items/item.entity';
 import { Repository } from 'typeorm';
+import { AddItemToZombieDto } from './dtos/add-item-to-zombie.dto';
+import { CreateZombieDto } from './dtos/create-zombie.dto';
+import { EditZombieDto } from './dtos/edit-zombie.dto';
 import { Zombie } from './zombie.entity';
 
 @Injectable()
@@ -9,12 +12,12 @@ export class ZombiesService {
   constructor(@InjectRepository(Zombie) private zombieRepo: Repository<Zombie>,
   @InjectRepository(Item) private itemRepo: Repository<Item>) {}
 
-  getAll() {
-    return this.zombieRepo.find();
+  async getAll() : Promise<Zombie[]> {
+    return await this.zombieRepo.find();
   }
 
-  getById(id: number) {
-    return this.zombieRepo.findOneOrFail(id);
+  async getById(id: number) {
+    return await this.zombieRepo.findOneOrFail(id);
   }
 
   async getItemsById(id: number):Promise<Item[]> {
@@ -45,13 +48,14 @@ export class ZombiesService {
     return result;
   }
 
-  add(zombieName: string, creationDate: Date) {
-    creationDate = creationDate ?? new Date(Date.now());
-    const newZombie = this.zombieRepo.create({ zombieName, creationDate });
-    return this.zombieRepo.save(newZombie);
+  async add(zombie : CreateZombieDto) {
+    zombie.creationDate = zombie.creationDate ?? new Date(Date.now());
+    const newZombie = this.zombieRepo.create(zombie);
+    return await this.zombieRepo.save(newZombie);
   }
 
-  async addItemToZombie(zombieId: number, itemId: number) {
+  async addItemToZombie(zombieItem: AddItemToZombieDto) {
+    const { zombieId, itemId } = zombieItem;
     try{
       const zombie = await this.zombieRepo.findOneOrFail(zombieId);
       if (zombie.items.length >= 5) throw Error("Zombie already has 5 items!");
@@ -72,11 +76,11 @@ export class ZombiesService {
     }
   }
 
-  async edit(id: number, zombieName: string) {
+  async edit(id: number, editZombie: EditZombieDto) {
     let zombie;
     try {
       zombie = await this.zombieRepo.findOneOrFail(id);
-      zombie.zombieName = zombieName;
+      zombie.zombieName = editZombie.zombieName;
       this.zombieRepo.save(zombie);
     } catch(err) {
       throw Error(err);
